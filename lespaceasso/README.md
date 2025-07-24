@@ -2,43 +2,51 @@
 
 Ceci est une application de gestion pour association créée dans Firebase Studio.
 
-## Déploiement sur YunoHost via Git (Recommandé)
+## Déploiement sur YunoHost avec "My Webapp" (Méthode Manuelle)
 
-Cette méthode est la plus simple pour l'installation et surtout pour les futures mises à jour.
+Ce guide vous explique comment déployer cette application Next.js sur votre serveur YunoHost en transférant manuellement les fichiers.
 
-### Étape 1 : Mettre votre projet sur GitHub
+---
 
-**Important :** Le nom de votre dépôt sur GitHub DOIT se terminer par `_ynh`. Par exemple : `lespaceasso_ynh`.
+### Étape 1 : Préparer et envoyer les fichiers
 
-1.  **Ouvrez un terminal** (comme PowerShell ou CMD) dans le dossier de votre projet `lespaceasso`.
-2.  Copiez-collez les commandes suivantes **une par une**, en remplaçant `VOTRE_PSEUDO` et `NOM_DU_DEPOT_YNH` par vos informations.
+1.  Sur votre ordinateur, localisez le dossier qui contient l'ensemble de votre projet (`lespaceasso`). C'est ce dossier que vous devez compresser. **Ne compressez pas les sous-dossiers individuellement.**
 
+2.  **Vérifiez que ce dossier contient bien les fichiers et dossiers suivants à sa racine** (cette liste n'est pas exhaustive mais contient les éléments principaux) :
+    -   Dossier `src`
+    -   Dossier `public`
+    -   Dossier `yunohost` (très important, il contient `manifest.json`)
+    -   Fichier `package.json`
+    -   Fichier `next.config.ts`
+    -   Fichier `tailwind.config.ts`
+    -   Fichier `README.md` (ce fichier)
+    -   ... et tous les autres fichiers de configuration.
+
+3.  Compressez le dossier `lespaceasso` dans une archive (par exemple : `lespaceasso.tar.gz`).
+4.  Connectez-vous à votre serveur YunoHost en **SFTP** (avec un client comme FileZilla) ou en **FTP**.
+5.  Uploadez votre archive `lespaceasso.tar.gz` dans un dossier temporaire sur votre serveur, par exemple `/tmp`.
+
+### Étape 2 : Installer depuis le serveur
+
+1.  Connectez-vous à votre serveur en **SSH**.
+2.  Naviguez jusqu'au dossier où vous avez uploadé l'archive :
     ```bash
-    # Initialise Git (si ce n'est pas déjà fait)
-    git init
-
-    # Ajoute TOUS les fichiers du projet
-    git add .
-
-    # Crée le premier "enregistrement"
-    git commit -m "Première version de l'application"
-
-    # Prépare l'envoi vers GitHub
-    git branch -M main
-    git remote add origin https://github.com/VOTRE_PSEUDO/NOM_DU_DEPOT_YNH.git
-
-    # Envoie les fichiers !
-    git push -u origin main
+    cd /tmp
     ```
+3.  Décompressez l'archive. Cela créera un nouveau dossier nommé `lespaceasso`.
+    ```bash
+    tar -xvf lespaceasso.tar.gz
+    ```
+4.  Lancez l'installation en pointant vers le dossier que vous venez de décompresser :
+    ```bash
+    # Le nom du dossier doit correspondre à l'ID dans le manifest.json
+    sudo yunohost app install /tmp/lespaceasso
+    ```
+5.  Suivez les instructions de YunoHost pour choisir le domaine, le chemin, etc.
 
-### Étape 2 : Installer depuis l'interface web de YunoHost
+---
 
-1.  Connectez-vous à l'administration de votre serveur YunoHost.
-2.  Allez dans `Applications` > `Installer`.
-3.  Tout en bas, dans "Installer une application personnalisée", collez l'URL complète de votre dépôt GitHub (ex: `https://github.com/medosaure/lespaceasso_ynh.git`).
-4.  Cliquez sur `Installer` et suivez les instructions.
-
-### Étape 3 : Créer le premier compte Administrateur
+### Étape 3 : Créer le premier compte Administrateur (après installation)
 
 La logique est simple : le tout premier compte à s'inscrire avec le rôle "Admin" sera **automatiquement approuvé** et deviendra l'administrateur principal.
 
@@ -49,4 +57,4 @@ La logique est simple : le tout premier compte à s'inscrire avec le rôle "Admi
     -   **Cochez la case "Admin"**. C'est l'étape la plus importante.
     -   Cliquez sur **"Demander l'inscription"**.
 
-Votre compte sera créé et vous pourrez vous connecter immédiatement avec les identifiants choisis. Les inscriptions suivantes devront être approuvées manuellement par un administrateur.
+Votre compte sera créé et vous pourrez vous connecter immédiatement avec les identifiants choisis. Les inscriptions suivantes (même celles demandant le rôle admin) devront être approuvées manuellement par un administrateur depuis le panneau d'administration.
