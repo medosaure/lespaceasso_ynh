@@ -2,59 +2,68 @@
 
 Ceci est une application de gestion pour association créée dans Firebase Studio.
 
-## Déploiement sur YunoHost avec "My Webapp" (Méthode Manuelle)
+## Déploiement sur YunoHost avec Git
 
-Ce guide vous explique comment déployer cette application Next.js sur votre serveur YunoHost en transférant manuellement les fichiers.
+Cette méthode est la plus recommandée car elle facilite les mises à jour.
 
----
+### Étape 1 : Envoyer le projet sur GitHub
 
-### Étape 1 : Préparer et envoyer les fichiers
+Si vous avez déjà envoyé votre projet sur GitHub, assurez-vous qu'il est à jour avec les dernières modifications. Si ce n'est pas le cas, ou si vous repartez de zéro, voici les commandes à lancer depuis le dossier du projet sur votre ordinateur.
 
-1.  Sur votre ordinateur, localisez le dossier qui contient l'ensemble de votre projet (`lespaceasso`). C'est ce dossier que vous devez compresser. **Ne compressez pas les sous-dossiers individuellement.**
+1.  **Se placer dans le bon dossier**
+    Ouvrez un terminal (comme PowerShell ou CMD sur Windows, ou Terminal sur macOS/Linux) et naviguez jusqu'au dossier `lespaceasso` que vous avez téléchargé.
 
-2.  **Vérifiez que ce dossier contient bien les fichiers et dossiers suivants à sa racine** (cette liste n'est pas exhaustive mais contient les éléments principaux) :
-    -   Dossier `src`
-    -   Dossier `public`
-    -   Dossier `yunohost` (très important, il contient `manifest.json`)
-    -   Fichier `package.json`
-    -   Fichier `next.config.ts`
-    -   Fichier `tailwind.config.ts`
-    -   Fichier `README.md` (ce fichier)
-    -   ... et tous les autres fichiers de configuration.
-
-3.  Compressez le dossier `lespaceasso` dans une archive (par exemple : `lespaceasso.tar.gz`).
-4.  Connectez-vous à votre serveur YunoHost en **SFTP** (avec un client comme FileZilla) ou en **FTP**.
-5.  Uploadez votre archive `lespaceasso.tar.gz` dans un dossier temporaire sur votre serveur, par exemple `/tmp`.
-
-### Étape 2 : Installer depuis le serveur
-
-1.  Connectez-vous à votre serveur en **SSH**.
-2.  Naviguez jusqu'au dossier où vous avez uploadé l'archive :
+2.  **Initialiser Git (si nécessaire)**
+    Si c'est la première fois que vous envoyez ce dossier, tapez :
     ```bash
-    cd /tmp
+    git init
     ```
-3.  Décompressez l'archive. Cela créera un nouveau dossier nommé `lespaceasso`.
+
+3.  **Lier à votre dépôt GitHub**
+    Si c'est la première fois, liez votre dossier local à votre dépôt distant :
     ```bash
-    tar -xvf lespaceasso.tar.gz
+    git remote add origin https://github.com/medosaure/lespaceasso_ynh.git
     ```
-4.  Lancez l'installation en pointant vers le dossier que vous venez de décompresser :
+    Si la commande retourne une erreur "remote origin already exists", ce n'est pas grave, vous pouvez l'ignorer.
+
+4.  **Ajouter tous les fichiers**
+    Cette commande est cruciale. Elle prépare tous les fichiers (nouveaux et modifiés) pour l'envoi. Le `.` signifie "tout".
     ```bash
-    # Le nom du dossier doit correspondre à l'ID dans le manifest.json
-    sudo yunohost app install /tmp/lespaceasso
+    git add .
     ```
-5.  Suivez les instructions de YunoHost pour choisir le domaine, le chemin, etc.
 
----
+5.  **Créer un "enregistrement" (commit)**
+    Ceci sauvegarde vos changements avec un message descriptif.
+    ```bash
+    git commit -m "Mise à jour de l'application"
+    ```
 
-### Étape 3 : Créer le premier compte Administrateur (après installation)
+6.  **Envoyer sur GitHub**
+    Cette commande transfère vos fichiers vers votre dépôt GitHub.
+    ```bash
+    git push -u origin main
+    ```
+    Si vous rencontrez une erreur "Updates were rejected", cela signifie que le dépôt en ligne a des changements que vous n'avez pas. Si vous êtes certain que votre version locale est la bonne, vous pouvez forcer l'envoi avec :
+    ```bash
+    git push -f origin main
+    ```
 
-La logique est simple : le tout premier compte à s'inscrire avec le rôle "Admin" sera **automatiquement approuvé** et deviendra l'administrateur principal.
+### Étape 2 : Installer sur YunoHost
 
-1.  Rendez-vous sur l'URL de votre application (`https://votre.domaine.tld`).
-2.  Cliquez sur l'onglet **"S'inscrire"**.
-3.  Remplissez le formulaire :
-    -   Choisissez un **pseudo** et un **mot de passe**.
-    -   **Cochez la case "Admin"**. C'est l'étape la plus importante.
-    -   Cliquez sur **"Demander l'inscription"**.
+1.  Connectez-vous à votre interface web d'administration YunoHost.
+2.  Allez dans "Applications" > "Installer".
+3.  Cherchez l'application "My Webapp" (ou "Ma Webapp").
+4.  Dans le champ "URL du dépôt Git", collez le lien de votre dépôt GitHub : `https://github.com/medosaure/lespaceasso_ynh.git`
+5.  Choisissez le domaine et le chemin où vous souhaitez l'installer.
+6.  Cliquez sur "Installer".
 
-Votre compte sera créé et vous pourrez vous connecter immédiatement avec les identifiants choisis. Les inscriptions suivantes (même celles demandant le rôle admin) devront être approuvées manuellement par un administrateur depuis le panneau d'administration.
+L'installation peut prendre plusieurs minutes, le temps que YunoHost télécharge le projet, installe les dépendances avec `npm install`, et lance l'application.
+
+### Étape 3 : Premier compte Administrateur
+
+Le tout premier compte inscrit avec le rôle "Admin" sera automatiquement approuvé et deviendra l'administrateur principal.
+
+1.  Rendez-vous sur l'URL de votre application.
+2.  Cliquez sur "S'inscrire".
+3.  Remplissez le formulaire, en cochant bien la case **"Admin"**.
+4.  Connectez-vous.

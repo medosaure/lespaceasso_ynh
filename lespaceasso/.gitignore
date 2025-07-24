@@ -1,42 +1,48 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# Dependencies
+# dependencies
 /node_modules
 /.pnp
 .pnp.js
+.yarn/install-state.gz
 
-# Testing
+# testing
 /coverage
 
-# Next.js build output
+# next.js
 /.next/
 /out/
 
-# Production
+# production
 /build
 
-# Misc
+# misc
 .DS_Store
 *.pem
 
-# Logs
+# debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-pnpm-debug.log*
+.pnpm-debug.log*
 
-# Local .env files
+# local env files
 .env*.local
 
-# Editor directories and files
-.vscode
-.idea
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+# vercel
+.vercel
 
-# YunoHost - Force include the necessary directory
-# The '!' prefix ensures this directory is NOT ignored, even if a broader rule would ignore it.
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# capacitor
+/my-app/dist/
+/my-app/node_modules/
+/my-app/www/
+/android/
+/ios/
+
+# Force inclusion of yunohost config
 !/yunohost/
+!/yunohost/**

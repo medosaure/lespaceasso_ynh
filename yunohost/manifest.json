@@ -1,11 +1,10 @@
-
 {
   "name": "L'Espace Asso",
-  "id": "lespaceasso",
+  "id": "lespaceasso_ynh",
   "description": "Une solution tout-en-un pour les associations.",
   "packaging_format": 2,
   "version": "1.0.0",
-  "url": "https://github.com/YunoHost-Apps/my_webapp_ynh",
+  "url": "https://github.com/medosaure/lespaceasso_ynh",
   "maintainer": {
     "name": "Your Name"
   },
