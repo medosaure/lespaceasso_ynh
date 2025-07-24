@@ -1,0 +1,35 @@
+{
+  "name": "L'Espace Asso",
+  "id": "lespaceasso_ynh",
+  "description": "Une solution tout-en-un pour les associations.",
+  "packaging_format": 2,
+  "version": "1.0.0",
+  "url": "https://github.com/YunoHost-Apps/my_webapp_ynh",
+  "maintainer": {
+    "name": "Your Name"
+  },
+  "multi_instance": true,
+  "services": [
+    "nginx"
+  ],
+  "requirements": {
+    "nodejs": "20"
+  },
+  "arguments": {
+    "install": [
+      {
+        "name": "domain",
+        "type": "domain"
+      },
+      {
+        "name": "path",
+        "type": "path",
+        "default": "/"
+      },
+      {
+        "name": "admin",
+        "type": "user"
+      }
+    ]
+  }
+}
