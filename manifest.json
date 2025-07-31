@@ -28,7 +28,8 @@
     "disk": "?",
     "ram": {
       "value": "?",
-      "include_swap": false
+      "include_swap": false,
+      "build": "?"
     }
   }
 }
