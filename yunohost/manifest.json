@@ -1,0 +1,23 @@
+{
+  "id": "lespaceasso",
+  "name": "L'Espace Asso",
+  "packaging_format": 2,
+  "description": "Plateforme Next.js/Vite pour gestion associative.",
+  "version": "1.0.0",
+  "url": "https://github.com/medosaure/lespaceasso",
+  "license": "MIT",
+  "maintainer": "medintaiwan@gmail.com",
+  "requirements": ["nodejs", "nginx"],
+  "multi_instance": false,
+  "services": ["nginx"],
+  "arguments": {
+    "domain": {
+      "type": "domain",
+      "ask": "Sur quel domaine installer l'app ?"
+    },
+    "path": {
+      "type": "path",
+      "ask": "À quel chemin installer l'app ?"
+    }
+  }
+}
