@@ -26,6 +26,9 @@
     "architectures": ["amd64"],
     "multi_instance": false,
     "disk": "?",
-    "ram": "?"
+    "ram": {
+      "value": "?",
+      "include_swap": false
+    }
   }
 }
