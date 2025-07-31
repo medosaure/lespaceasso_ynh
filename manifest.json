@@ -25,6 +25,7 @@
     "yunohost": "4.3",
     "architectures": ["amd64"],
     "multi_instance": false,
-    "disk": "?"
+    "disk": "?",
+    "ram": "?"
   }
 }
