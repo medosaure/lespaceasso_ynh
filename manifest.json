@@ -29,7 +29,8 @@
     "ram": {
       "value": "?",
       "include_swap": false,
-      "build": "?"
+      "build": "?",
+      "runtime": "?"
     }
   }
 }
