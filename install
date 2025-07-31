@@ -18,8 +18,9 @@ npm install
 echo "[lespaceasso] Build de l'application..."
 npm run build || true
 
-echo "[lespaceasso] Démarrage de l'application..."
-npm run start &
+
+echo "[lespaceasso] Build terminé. Le serveur Node.js n'est pas lancé automatiquement pour ne pas bloquer l'installation YunoHost."
+echo "[lespaceasso] Pour lancer l'application, utilisez : cd $install_dir/src && npm run start"
 
 echo "[lespaceasso] Configuration YunoHost (domain/path)"
 yunohost app setting $app domain -v $YNH_APP_ARG_DOMAIN
