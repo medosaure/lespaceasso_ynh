@@ -20,4 +20,8 @@
       "ask": "À quel chemin installer l'app ?"
     }
   }
+  ,
+  "integration": {
+    "yunohost": "4.3"
+  }
 }
