@@ -2,29 +2,30 @@
 # Script d'installation YunoHost pour lespaceasso
 set -e
 
-# Variables
 app=lespaceasso
 install_dir=/var/www/$app
 
-# Création du dossier
+echo "[lespaceasso] Création du dossier d'installation : $install_dir"
 mkdir -p $install_dir
 
-# Récupération du code source
+echo "[lespaceasso] Clonage du dépôt principal..."
 git clone https://github.com/medosaure/lespaceasso.git $install_dir
 
-# Installation des dépendances
+echo "[lespaceasso] Installation des dépendances npm..."
 cd $install_dir/src
 npm install
 
-# Build et lancement
+echo "[lespaceasso] Build de l'application..."
 npm run build || true
+
+echo "[lespaceasso] Démarrage de l'application..."
 npm run start &
 
-# Configuration nginx
+echo "[lespaceasso] Configuration YunoHost (domain/path)"
 yunohost app setting $app domain -v $YNH_APP_ARG_DOMAIN
 yunohost app setting $app path -v $YNH_APP_ARG_PATH
 
-# Génération du fichier de config nginx
+echo "[lespaceasso] Génération du fichier de config nginx..."
 nginx_conf="/etc/nginx/conf.d/$YNH_APP_ARG_DOMAIN.d/$app.conf"
 cat > $nginx_conf <<EOL
 location $YNH_APP_ARG_PATH/ {
@@ -39,6 +40,8 @@ location $YNH_APP_ARG_PATH/ {
 }
 EOL
 
+echo "[lespaceasso] Reload nginx..."
 systemctl reload nginx
 
+echo "[lespaceasso] Installation terminée."
 exit 0
