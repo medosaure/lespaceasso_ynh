@@ -12,15 +12,31 @@ echo "[lespaceasso] Clonage du dépôt principal..."
 git clone https://github.com/medosaure/lespaceasso.git $install_dir
 
 echo "[lespaceasso] Installation des dépendances npm..."
-cd $install_dir/src
+#!/bin/bash
+# Script d'installation YunoHost pour lespaceasso
+set -e
+
+app=lespaceasso
+install_dir=/var/www/$app
+
+echo "[lespaceasso] Création du dossier d'installation : $install_dir"
+mkdir -p $install_dir
+
+echo "[lespaceasso] Clonage du dépôt principal..."
+git clone --depth=1 https://github.com/medosaure/lespaceasso.git /tmp/lespaceasso-tmp
+
+echo "[lespaceasso] Copie du dossier my-app dans $install_dir"
+cp -r /tmp/lespaceasso-tmp/my-app/* $install_dir/
+rm -rf /tmp/lespaceasso-tmp
+
+echo "[lespaceasso] Installation des dépendances npm..."
+cd $install_dir
 npm install
 
 echo "[lespaceasso] Build de l'application..."
 npm run build || true
 
-
-echo "[lespaceasso] Build terminé. Le serveur Node.js n'est pas lancé automatiquement pour ne pas bloquer l'installation YunoHost."
-echo "[lespaceasso] Pour lancer l'application, utilisez : cd $install_dir/src && npm run start"
+echo "[lespaceasso] Build terminé. Pour lancer l'application, utilisez : cd $install_dir && npm run start"
 
 echo "[lespaceasso] Configuration YunoHost (domain/path)"
 yunohost app setting $app domain -v $YNH_APP_ARG_DOMAIN
